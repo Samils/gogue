@@ -31,13 +31,14 @@
  * SOFTWARE.
  */
 namespace Sammy\Packs\Gogue {
+  use Sammy\Packs\Path;
   use Clinter\Console;
   /**
    * Make sure the module base internal trait is not
    * declared in the php global scope defore creating
    * it.
-   * It ensures that the script flux is not interrupted 
-   * when trying to run the current command by the cli 
+   * It ensures that the script flux is not interrupted
+   * when trying to run the current command by the cli
    * API.
    */
   if (!trait_exists ('Sammy\Packs\Gogue\Base')) {
@@ -59,16 +60,18 @@ namespace Sammy\Packs\Gogue {
    */
   trait Base {
     /**
-     * Get gogue configuration object from the 
+     * Get gogue configuration object from the
      * 'gogue.config' file in the root directory
      */
     public static function GetConfig () {
       $gogueConfig = requires ('~/gogue.config');
 
+      $path = new Path;
+
       $gogueConfigurationsSet = ( boolean ) (
         is_array ($gogueConfig) &&
         isset ($gogueConfig ['baseDir']) &&
-        is_dir ($baseDir = path ((string)(
+        is_dir ($baseDir = $path->join ((string)(
           $gogueConfig ['baseDir']
         )))
       );
@@ -76,15 +79,13 @@ namespace Sammy\Packs\Gogue {
       if ( !$gogueConfigurationsSet ) {
         Console::Error ('No GOGUE configurations set');
 
-        return 0;
+        exit (0);
       }
 
       $gogueConfig ['baseDir'] = preg_replace ('/(\\\|\/)+$/', '', $baseDir);
       $configCompiler = requires ('gogue/config/compiler');
 
-      $compiledConfigs = $configCompiler->compileConfigs (
-        $gogueConfig
-      );
+      $compiledConfigs = $configCompiler->compileConfigs ($gogueConfig);
 
       return $compiledConfigs;
     }
@@ -117,6 +118,6 @@ namespace Sammy\Packs\Gogue {
       if ($isValidGogueTranspiler) {
         return $gogueTranspilerCore;
       }
-    } 
+    }
   }}
 }

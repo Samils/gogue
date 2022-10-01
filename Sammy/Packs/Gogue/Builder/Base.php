@@ -35,6 +35,7 @@ namespace Sammy\Packs\Gogue\Builder {
 	use Sammy\Packs\Sami\CommandLineInterface\Options;
 	use Sammy\Packs\Sami\CommandLineInterface\Console;
 	use Sammy\Packs\Gogue;
+  use Sammy\Packs\Path;
 	use Saml;
   /**
    * Make sure the module base internal trait is not
@@ -77,7 +78,9 @@ namespace Sammy\Packs\Gogue\Builder {
   			$gogueTarget = $gogueConfig ['target'];
   		}
 
-  		$filePath = path ($params->first ());
+      $path = new Path;
+
+  		$filePath = $path->join ($params->first ());
 
   		if (!is_file ($filePath)) {
   			Console::Error ("File not found: {$filePath}");
