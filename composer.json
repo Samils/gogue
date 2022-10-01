@@ -38,7 +38,8 @@
 		"php": ">=5.6.20",
     "php_modules/gogue-component-base": "dev-main",
     "php_modules/gogue-component-config": "dev-main",
-    "php_modules/gogue-component-transpiler": "dev-main"
+    "php_modules/gogue-component-transpiler": "dev-main",
+    "php_modules/gogue-plugin-config-compiler": "dev-main"
 	},
   "suggest": {
     "samils/samils-component-saml": ""
