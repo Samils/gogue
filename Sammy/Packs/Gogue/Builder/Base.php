@@ -34,6 +34,7 @@ namespace Sammy\Packs\Gogue\Builder {
 	use Sammy\Packs\Sami\CommandLineInterface\Parameters;
 	use Sammy\Packs\Sami\CommandLineInterface\Options;
 	use Sammy\Packs\Sami\CommandLineInterface\Console;
+  use Sammy\Packs\Gogue\Helper;
 	use Sammy\Packs\Gogue;
   use Sammy\Packs\Path;
 	use Saml;
@@ -116,6 +117,10 @@ namespace Sammy\Packs\Gogue\Builder {
 
   		  $outDir = $gogueConfig ['outDir'];
 
+        if (!is_dir ($outDir)) {
+          Helper::MkDir ($outDir);
+        }
+
   		  $outDirRe = self::slashReSpecialChars ($outDir);
 
   		  $outDirRe = "/^({$outDirRe})/";
@@ -159,7 +164,7 @@ namespace Sammy\Packs\Gogue\Builder {
   		}
 
   		if (!is_dir (dirname ($newFilePath))) {
-  		  Saml::MkDir (dirname ($newFilePath));
+  		  Helper::MkDir (dirname ($newFilePath));
   		}
 
   		$newFileHandle = fopen ($newFilePath, 'w');

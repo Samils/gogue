@@ -31,6 +31,7 @@
  * SOFTWARE.
  */
 namespace Sammy\Packs\Gogue {
+  use FileSystem\Folder;
   /**
    * Make sure the module base internal class is not
    * declared in the php global scope defore creating
@@ -79,6 +80,15 @@ namespace Sammy\Packs\Gogue {
           }
         }
       }
+    }
+
+    /**
+     * @method void
+     *
+     * create a directory by absolute path
+     */
+    public static function MkDir () {
+      return forward_static_call_array ([Folder::class, 'create'], func_get_args ());
     }
   }}
 }
